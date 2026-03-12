@@ -18,3 +18,11 @@
 - 第0块的逻辑像素开始于0逻辑像素，结束于第4逻辑像素，所以第n块<br>
 开始于第 n * BLOCK_SIZE,结束于 n * (BLOCK_SIZE + 1) - 1,用0based去数第几块就不会混乱
 - 举ALIGN块，ALIGIN块应该开始于第130行，结束于第134行，所以用GRID_ROWS - ALIGN_SIZE
+- # decoder
+## decoder/frame_reader.py 
+- 使用 cv2.VideoCapture 读取视频
+- read_frames(video_path) 以生成器方式逐帧 yield 原始 BGR 帧（不做灰度化或其它图像处理）
+- 帧类型保持 OpenCV 默认：np.ndarray，shape=(H, W, 3)，dtype=uint8
+- 文件不存在时抛出 FileNotFoundError
+- 文件存在但无法打开时抛出 RuntimeError
+- get_video_info(video_path) 返回 frame_count / fps / width / height
